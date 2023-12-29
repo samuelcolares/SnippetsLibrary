@@ -7,7 +7,7 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { useFormState } from "react-dom";
 import * as actions from "@/actions";
 import { redirect } from "next/navigation";
-import { SnippetType } from "../../../../../../types";
+import { SnippetType } from "@/types";
 import { cn } from "@/lib/utils";
 
 const Category = [
