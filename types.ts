@@ -6,3 +6,14 @@ export type SnippetType = {
   language: string;
   snippet: string;
 };
+
+export type CategoryType = {
+  id: string;
+  categoryTitle: string;
+};
+
+export type User = {
+  id: string;
+  username: string;
+  password: string;
+};

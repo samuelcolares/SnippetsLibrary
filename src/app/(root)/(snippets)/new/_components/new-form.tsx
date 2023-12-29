@@ -7,6 +7,7 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { useFormState } from "react-dom";
 import * as actions from "@/actions";
 import { redirect } from "next/navigation";
+import { CategoryType } from "@/types";
 
 const languages = [
   {
@@ -34,7 +35,7 @@ const Category = [
   },
 ];
 
-const NewSnippetForm = () => {
+const NewSnippetForm = ({categories}:{categories: CategoryType[]}) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [snippetCode, setSnippetCode] = useState<string>("");
   const [language, setLanguage] = useState<string>("txt");
@@ -47,14 +48,12 @@ const NewSnippetForm = () => {
     setSnippetCode(value);
   };
 
-  const createAction = action.bind(null);
-
   return (
     <>
       <h2 className="p-2 pl-0 text-2xl">New Snippet</h2>
       <form
         className="border p-2 rounded-md border-grey-200 flex flex-col gap-2"
-        action={createAction}
+        action={action}
       >
         <div className="flex gap-2">
           <Input
@@ -66,11 +65,11 @@ const NewSnippetForm = () => {
           <Autocomplete
             label="Select Category"
             className="max-w-[50%]"
-            defaultItems={Category}
+            defaultItems={categories}
             name="category"
           >
             {(item) => (
-              <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>
+              <AutocompleteItem key={item.id}>{item.categoryTitle}</AutocompleteItem>
             )}
           </Autocomplete>
         </div>

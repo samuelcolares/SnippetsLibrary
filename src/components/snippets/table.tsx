@@ -18,21 +18,27 @@ import {
   SortDescriptor,
   Tooltip,
 } from "@nextui-org/react";
-import { PlusIcon } from "./PlusIcon";
-import { ChevronDownIcon } from "./ChevronDownIcon";
-import { SearchIcon } from "./SearchIcon";
-import { columns, categoryOptions } from "./data";
+import { PlusIcon } from "../ui/PlusIcon";
+import { ChevronDownIcon } from "../ui/ChevronDownIcon";
+import { SearchIcon } from "../ui/SearchIcon";
+import { columns, categoryOptions } from "../data";
 import { capitalize } from "@/lib/utils";
 import Link from "next/link";
-import { SnippetType } from "../../types";
+import { CategoryType, SnippetType } from "../../../types";
 
-import { EditIcon } from "./edit-icon";
-import { EyeIcon } from "./view-icon";
-import ModalDelete from "./modal-delete";
+import { EditIcon } from "../ui/edit-icon";
+import { EyeIcon } from "../ui/view-icon";
+import ModalDelete from "../modal-delete";
+import { Layers3Icon } from "lucide-react";
 
 const INITIAL_VISIBLE_COLUMNS = ["title", "category", "description", "actions"];
 
-export default function App({ snippets }: { snippets: SnippetType[] }) {
+type Props = {
+  snippets: SnippetType[];
+  categories: CategoryType[];
+};
+
+export default function App({ snippets, categories }: Props) {
   const [isMounted, setIsMounted] = React.useState<boolean>(false);
 
   React.useEffect(() => {
@@ -81,7 +87,7 @@ export default function App({ snippets }: { snippets: SnippetType[] }) {
     }
     if (
       categoryFilter !== "all" &&
-      Array.from(categoryFilter).length !== categoryOptions.length
+      Array.from(categoryFilter).length !== categories.length
     ) {
       filteredSnippets = filteredSnippets.filter((snippet) =>
         Array.from(categoryFilter).includes(snippet.category)
@@ -275,21 +281,21 @@ export default function App({ snippets }: { snippets: SnippetType[] }) {
                 selectionMode="multiple"
                 onSelectionChange={setStatusFilter}
               >
-                {categoryOptions.map((category) => (
-                  <DropdownItem key={category.uid} className="capitalize">
-                    {capitalize(category.name)}
+                {categories.map((category) => (
+                  <DropdownItem key={category.id} className="capitalize">
+                    {capitalize(category.categoryTitle)}
                   </DropdownItem>
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Link href="/new">
+            <Link href="/category">
               <Button
                 color="primary"
                 variant="bordered"
-                endContent={<PlusIcon />}
+                endContent={<Layers3Icon />}
                 className="h-12"
               >
-                New Category
+                Categories Page
               </Button>
             </Link>
             <Link href="/new">
@@ -370,19 +376,19 @@ export default function App({ snippets }: { snippets: SnippetType[] }) {
 
   return (
     <Table
-      aria-label="Example table with custom cells, pagination and sorting"
+      aria-label="Snippets table with custom cells, pagination and sorting"
       isHeaderSticky
       classNames={{
         wrapper: "max-h-[382px]",
       }}
       selectedKeys={selectedKeys}
       // selectionMode="multiple"
-      sortDescriptor={sortDescriptor}
       topContent={topContent}
       topContentPlacement="outside"
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
       onSelectionChange={setSelectedKeys}
+      sortDescriptor={sortDescriptor}
       onSortChange={setSortDescriptor}
       isStriped={true}
     >

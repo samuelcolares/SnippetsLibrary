@@ -1,30 +1,13 @@
 "use client";
 import React from "react";
-import { Button, Input, ButtonGroup } from "@nextui-org/react";
+import { Button, Input, Code } from "@nextui-org/react";
 import { Editor } from "@monaco-editor/react";
 import { Textarea } from "@nextui-org/react";
-
-import { SnippetType } from "../../../../../types";
+import { SnippetType } from "@/types";
 import { useRouter } from "next/navigation";
 import * as actions from "@/actions";
 import ModalDelete from "@/components/modal-delete";
 
-const languages = [
-  {
-    label: "Javascript",
-    value: "javascript",
-  },
-  {
-    label: "Typescript",
-    value: "typescript",
-  },
-  {
-    label: "Text",
-    value: "txt",
-  },
-];
-
-const Category = ["LeetCode", "Shadcn/UI"];
 
 const View: React.FC<SnippetType> = ({
   category,
@@ -36,7 +19,6 @@ const View: React.FC<SnippetType> = ({
 }) => {
   const router = useRouter();
   const edit = () => router.push(`/${id}/edit`);
-  const del = actions.deleteSnippet.bind(null, id);
 
   return (
     <>
@@ -46,11 +28,6 @@ const View: React.FC<SnippetType> = ({
           <Button color="primary" onClick={edit} variant="faded">
             Edit
           </Button>
-          {/* <form action={del}>
-          <Button color="danger" variant="faded" type="submit">
-            Delete
-          </Button>
-        </form> */}
           <ModalDelete
             category={category}
             id={id}
@@ -88,10 +65,7 @@ const View: React.FC<SnippetType> = ({
           readOnly
         />
         <div>
-          {/* <ButtonGroup radius="sm" className="mb-1" variant="ghost">
-            <Button disabled>{language}</Button>
-          </ButtonGroup> */}
-          <p>{language}</p>
+          <Code className="uppercase mb-1" color="primary">{language}</Code>
           <Editor
             height={"40vh"}
             theme="vs-dark"

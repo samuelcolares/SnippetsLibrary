@@ -10,24 +10,20 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { DeleteIcon } from "./ui/delete-icon";
-import { SnippetType } from "../../types";
+import { CategoryType } from "../../types";
 import * as actions from "@/actions";
 
-type ModalProps = SnippetType & {
+type ModalProps = CategoryType & {
   variant?: boolean;
 };
 
 export default function ModalDelete({
-  category,
-  description,
+  categoryTitle,
   id,
-  language,
-  snippet,
-  title,
   variant = false,
 }: ModalProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const deleteAction = actions.deleteSnippet.bind(null, id);
+  const deleteAction = actions.deleteCategory.bind(null, id);
   return (
     <>
       {!variant && (
@@ -51,7 +47,7 @@ export default function ModalDelete({
                 Attention!
               </ModalHeader>
               <ModalBody>
-                <p>Deleting {title}</p>
+                <p>Deleting {categoryTitle}</p>
                 <p>This action cannot be undone.</p>
               </ModalBody>
               <ModalFooter>

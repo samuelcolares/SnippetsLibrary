@@ -18,3 +18,8 @@ model Snippet {
   language    String
   snippet     String
 }
+
+model Category {
+  id            String @id @default(uuid())
+  categoryTitle String
+}
