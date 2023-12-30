@@ -11,9 +11,11 @@ const EditPage = async ({ params }: { params: { id: string } }) => {
     },
   });
 
+  const categories = await prismadb.category.findMany();
+
   if (!snippet) notFound();
 
-  return <EditSnippetForm {...snippet} />;
+  return <EditSnippetForm {...snippet}  categories={categories}/>;
 };
 
 export default EditPage;

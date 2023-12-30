@@ -7,27 +7,22 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { useFormState } from "react-dom";
 import * as actions from "@/actions";
 import { redirect } from "next/navigation";
-import { SnippetType } from "@/types";
+import { CategoryType, SnippetType } from "@/types";
 import { cn } from "@/lib/utils";
+import { languages } from "@/languages";
 
-const Category = [
-  {
-    label: "LeetCode",
-    value: "LeetCode",
-  },
-  {
-    label: "Shadcn/UI",
-    value: "Shadcn/UI",
-  },
-];
+type EditFormProp = SnippetType & {
+  categories: CategoryType[];
+};
 
-const EditSnippetForm: React.FC<SnippetType> = ({
+const EditSnippetForm: React.FC<EditFormProp> = ({
   category,
   description,
   id,
   language,
   snippet,
   title,
+  categories,
 }) => {
   const [snippetCode, setSnippetCode] = useState<string>(snippet);
   const [languageType, setLanguage] = useState<string>(language);
@@ -68,12 +63,14 @@ const EditSnippetForm: React.FC<SnippetType> = ({
           <Autocomplete
             label="Select Category"
             className="max-w-[50%]"
-            defaultItems={Category}
+            defaultItems={categories}
             name="category"
             defaultInputValue={category}
           >
             {(item) => (
-              <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>
+              <AutocompleteItem key={item.id}>
+                {item.categoryTitle}
+              </AutocompleteItem>
             )}
           </Autocomplete>
         </div>
@@ -84,27 +81,16 @@ const EditSnippetForm: React.FC<SnippetType> = ({
         />
         <div>
           <ButtonGroup radius="sm" className="mb-1" variant="ghost">
-            <Button
-              onClick={() => setLanguage("javascript")}
-              color={languageType === "javascript" ? "primary" : "default"}
-              variant={languageType === "javascript" ? "solid" : "ghost"}
-            >
-              JavaScript
-            </Button>
-            <Button
-              onClick={() => setLanguage("typescript")}
-              color={languageType === "typescript" ? "primary" : "default"}
-              variant={languageType === "typescript" ? "solid" : "ghost"}
-            >
-              TypeScript
-            </Button>
-            <Button
-              onClick={() => setLanguage("txt")}
-              color={languageType === "txt" ? "primary" : "default"}
-              variant={languageType === "txt" ? "solid" : "ghost"}
-            >
-              txt
-            </Button>
+            {languages.map((lang) => (
+              <Button
+                key={lang.label}
+                onClick={() => setLanguage(lang.value)}
+                color={languageType === lang.value ? "primary" : "default"}
+                variant={languageType === lang.value ? "solid" : "ghost"}
+              >
+                {lang.label}
+              </Button>
+            ))}
           </ButtonGroup>
           <Editor
             height={"40vh"}

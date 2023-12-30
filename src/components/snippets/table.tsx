@@ -52,12 +52,13 @@ export default function App({ snippets, categories }: Props) {
   const [visibleColumns, setVisibleColumns] = React.useState<Selection>(
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
-  const [categoryFilter, setStatusFilter] = React.useState<Selection>("all");
+  const [categoryFilter, setCategoryFilter] = React.useState<Selection>("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
     column: "id",
     direction: "ascending",
   });
+
 
   const [page, setPage] = React.useState(1);
 
@@ -279,10 +280,10 @@ export default function App({ snippets, categories }: Props) {
                 closeOnSelect={false}
                 selectedKeys={categoryFilter}
                 selectionMode="multiple"
-                onSelectionChange={setStatusFilter}
+                onSelectionChange={setCategoryFilter}
               >
                 {categories.map((category) => (
-                  <DropdownItem key={category.id} className="capitalize">
+                  <DropdownItem key={category.categoryTitle} className="capitalize">
                     {capitalize(category.categoryTitle)}
                   </DropdownItem>
                 ))}

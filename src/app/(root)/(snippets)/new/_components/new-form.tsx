@@ -8,21 +8,7 @@ import { useFormState } from "react-dom";
 import * as actions from "@/actions";
 import { redirect } from "next/navigation";
 import { CategoryType } from "@/types";
-
-const languages = [
-  {
-    label: "Javascript",
-    value: "javascript",
-  },
-  {
-    label: "Typescript",
-    value: "typescript",
-  },
-  {
-    label: "Text",
-    value: "txt",
-  },
-];
+import { languages } from "@/languages";
 
 const Category = [
   {
@@ -35,7 +21,7 @@ const Category = [
   },
 ];
 
-const NewSnippetForm = ({categories}:{categories: CategoryType[]}) => {
+const NewSnippetForm = ({ categories }: { categories: CategoryType[] }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [snippetCode, setSnippetCode] = useState<string>("");
   const [language, setLanguage] = useState<string>("txt");
@@ -69,34 +55,25 @@ const NewSnippetForm = ({categories}:{categories: CategoryType[]}) => {
             name="category"
           >
             {(item) => (
-              <AutocompleteItem key={item.id}>{item.categoryTitle}</AutocompleteItem>
+              <AutocompleteItem key={item.id}>
+                {item.categoryTitle}
+              </AutocompleteItem>
             )}
           </Autocomplete>
         </div>
         <Textarea label="Description" name="description" />
         <div>
           <ButtonGroup radius="sm" className="mb-1" variant="ghost">
-            <Button
-              onClick={() => setLanguage("javascript")}
-              color={language === "javascript" ? "primary" : "default"}
-              variant={language === "javascript" ? "solid" : "ghost"}
-            >
-              JavaScript
-            </Button>
-            <Button
-              onClick={() => setLanguage("typescript")}
-              color={language === "typescript" ? "primary" : "default"}
-              variant={language === "typescript" ? "solid" : "ghost"}
-            >
-              TypeScript
-            </Button>
-            <Button
-              onClick={() => setLanguage("txt")}
-              color={language === "txt" ? "primary" : "default"}
-              variant={language === "txt" ? "solid" : "ghost"}
-            >
-              txt
-            </Button>
+            {languages.map((lang) => (
+              <Button
+                key={lang.label}
+                onClick={() => setLanguage(lang.value)}
+                color={language === lang.value ? "primary" : "default"}
+                variant={language === lang.value ? "solid" : "ghost"}
+              >
+                {lang.label}
+              </Button>
+            ))}
           </ButtonGroup>
           <Editor
             height={"40vh"}
@@ -124,3 +101,4 @@ const NewSnippetForm = ({categories}:{categories: CategoryType[]}) => {
 };
 
 export default NewSnippetForm;
+
