@@ -1,13 +1,18 @@
 "use client";
 import React, { useState } from "react";
+import { Image } from "@nextui-org/react";
 import logo from "@/logo.png";
-import Image from "next/image";
+import adobe from "@/adobe.jpeg";
+// import Image from "next/image";
+import NextImage from "next/image";
+import avatar from "@/avatar.png";
 
 import { Shadows_Into_Light } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Button, Input } from "@nextui-org/react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import BG from "./anim/bg";
 
 const SIL = Shadows_Into_Light({
   weight: "400",
@@ -24,7 +29,7 @@ const style = {
   ],
   innerWrapper: "bg-transparent",
   inputWrapper: [
-    "shadow-xl",
+    "shadow-2xl",
     "bg-default-200/50",
     "dark:bg-default/60",
     "backdrop-blur-xl",
@@ -45,8 +50,9 @@ const LoginScreen = () => {
   const [loading, setLoading] = useState<boolean>(false);
   // const [color]
   const router = useRouter();
-  const action = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const action = async () => {
+    // e: React.FormEvent<HTMLFormElement>
+    // e.preventDefault();
     if (data.username && data.password) {
       try {
         setLoading(true);
@@ -56,64 +62,60 @@ const LoginScreen = () => {
           password: data.password,
           redirect: false,
         });
-        router.push("/");
       } catch (error) {
         console.error("Erro de autenticação:", error);
       } finally {
+        router.push("/");
         setLoading(false);
       }
     }
   };
   return (
-    <div className="flex-1 dark bg-background border-4 border-[] flex">
-      <div className="flex-1 flex items-center justify-center flex-col gap-8">
-        <div className="w-[250px] h-[250px]">
+    <div className="flex-1 dark eees  flex items-center justify-center overflow-hidden relative">
+      <BG />
+      <div className="w-96 h-[28rem] bg-[#F8F9FD]/95 rounded-xl relative z-20">
+        <div className="w-[200px] h-[200px] mx-auto mt-[-75px] shadow-2xl">
           <Image
-            src={logo}
-            alt="logo"
-            width={logo.width}
-            height={logo.height}
-            priority
-            className="w-full h-full object-cover"
+            as={NextImage}
+            width={avatar.width}
+            height={avatar.height}
+            src={avatar.src}
+            alt="NextUI hero Image"
+            isBlurred
+            className="object-cover"
           />
         </div>
-        <h1 className={cn("text-white text-4xl uppercase", SIL.className)}>
-          {"Sam's personal library"}
-        </h1>
-      </div>
-      <div className="bg-white flex-1 rounded-3xl rounded-r-none flex items-center justify-center">
-        <form
-          // action={action}
-          className="flex items-center justify-center flex-col gap-4"
-          onSubmit={action}
+        <h1
+          className={cn(
+            "text-black text-3xl uppercase text-center mt-10 mb-10",
+            SIL.className
+          )}
         >
-          <h2 className={cn("text-4xl uppercase", SIL.className)}>Login</h2>
+          {/* {"Sam's personal library"} */}
+          サムの個人ライブラリ
+        </h1>
+        <form
+          action={action}
+          className="flex items-center justify-center flex-col gap-4 w-[80%] mx-auto"
+          // onSubmit={action}
+        >
           <Input
-            label="Username"
+            label="ユーザー名"
             size="sm"
             classNames={style}
             name="username"
             onChange={(e) => setData({ ...data, username: e.target.value })}
           />
           <Input
-            label="Password"
+            label="パスワード"
             type="password"
             size="sm"
             name="password"
-            // variant="underlined"
             classNames={style}
             onChange={(e) => setData({ ...data, password: e.target.value })}
           />
-          {/* <label htmlFor="username">Username</label>
-          <input
-            // label="Username"
-            // size="sm"
-            // classNames={style}
-            name="username"
-            onChange={(e) => setData({ ...data, username: e.target.value })}
-          /> */}
           <Button className="w-full" type="submit" isLoading={loading}>
-            Enter
+            ログイン
           </Button>
         </form>
       </div>

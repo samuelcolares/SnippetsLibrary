@@ -1,6 +1,7 @@
-import prismadb from "@/lib/db";
-import { notFound } from "next/navigation";
 import React from "react";
+import { notFound } from "next/navigation";
+import prismadb from "@/lib/db";
+
 import View from "./_components/view";
 
 const ViewPage = async ({ params }: { params: { id: string } }) => {
@@ -12,7 +13,6 @@ const ViewPage = async ({ params }: { params: { id: string } }) => {
   });
 
   if (!snippet) notFound();
-  console.log(snippet);
 
   return <View {...snippet} />;
 };

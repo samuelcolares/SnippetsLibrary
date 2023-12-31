@@ -7,3 +7,78 @@ body,
 :root {
   height: 100%;
 }
+
+.light2 {
+  position: absolute;
+  width: 3px;
+  opacity: 0.5;
+  background-color: #4f4f56;
+  height: 2rem;
+  /* box-shadow: #e9f1f1 0px 0px 10px 2px; */
+  opacity: 0;
+  top: 100vh;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin: auto;
+}
+
+.parallel {
+  transform: skew(-40deg);
+  position: absolute;
+  z-index: -9;
+}
+
+.light3 {
+  position: absolute;
+  width: 2rem;
+  opacity: 0.5;
+  background-color: #4f4f56;
+  height: 3px;
+  /* box-shadow: #e9f1f1 0px 0px 10px 2px; */
+  opacity: 0;
+  top: 0px;
+  bottom: 0px;
+  left: 100%;
+  right: 0px;
+  margin: auto;
+}
+
+/* .eees {
+  background: #232526;
+  background: -webkit-linear-gradient(
+    to right,
+    #414345,
+    #232526
+  );
+  background: linear-gradient(
+    to right,
+    #414345,
+    #232526
+  );
+} */
+
+.eees {
+  background: radial-gradient(
+    closest-side,
+    #000000,
+    #131414,
+    #101010,
+    #000000,
+    #131414,
+    #101010,
+    #000000
+  );
+  background-size: 400% 400%;
+  animation: bg 80s linear infinite;
+}
+
+@keyframes bg {
+  0% {
+    background-position-x: 0;
+  }
+
+  100% {
+    background-position-x: 400%;
+  }
+}

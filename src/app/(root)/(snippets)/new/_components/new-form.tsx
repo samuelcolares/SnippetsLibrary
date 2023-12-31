@@ -1,28 +1,18 @@
 "use client";
 import React, { useState } from "react";
+import { useFormState } from "react-dom";
 import { Button, Input, ButtonGroup } from "@nextui-org/react";
 import { Editor } from "@monaco-editor/react";
 import { Textarea } from "@nextui-org/react";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
-import { useFormState } from "react-dom";
+
 import * as actions from "@/actions";
-import { redirect } from "next/navigation";
+
 import { CategoryType } from "@/types";
 import { languages } from "@/languages";
 
-const Category = [
-  {
-    label: "LeetCode",
-    value: "LeetCode",
-  },
-  {
-    label: "Shadcn/UI",
-    value: "Shadcn/UI",
-  },
-];
 
 const NewSnippetForm = ({ categories }: { categories: CategoryType[] }) => {
-  const [loading, setLoading] = useState<boolean>(false);
   const [snippetCode, setSnippetCode] = useState<string>("");
   const [language, setLanguage] = useState<string>("txt");
 

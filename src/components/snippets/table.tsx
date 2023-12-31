@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Link from "next/link";
 import {
   Table,
   TableHeader,
@@ -18,18 +19,18 @@ import {
   SortDescriptor,
   Tooltip,
 } from "@nextui-org/react";
-import { PlusIcon } from "../ui/PlusIcon";
-import { ChevronDownIcon } from "../ui/ChevronDownIcon";
-import { SearchIcon } from "../ui/SearchIcon";
-import { columns, categoryOptions } from "../data";
-import { capitalize } from "@/lib/utils";
-import Link from "next/link";
-import { CategoryType, SnippetType } from "../../../types";
 
-import { EditIcon } from "../ui/edit-icon";
-import { EyeIcon } from "../ui/view-icon";
-import ModalDelete from "../modal-delete";
+import { PlusIcon } from "@/components/ui/PlusIcon";
+import { ChevronDownIcon } from "@/components/ui/ChevronDownIcon";
+import { SearchIcon } from "@/components/ui/SearchIcon";
+import { EditIcon } from "@/components/ui/edit-icon";
+import { EyeIcon } from "@/components/ui/view-icon";
 import { Layers3Icon } from "lucide-react";
+
+import { capitalize } from "@/lib/utils";
+import { columns } from "@/components/data";
+import ModalDelete from "@/components/modal-delete";
+import { CategoryType, SnippetType } from "@/types";
 
 const INITIAL_VISIBLE_COLUMNS = ["title", "category", "description", "actions"];
 
@@ -38,7 +39,7 @@ type Props = {
   categories: CategoryType[];
 };
 
-export default function App({ snippets, categories }: Props) {
+export default function SnippetsTable({ snippets, categories }: Props) {
   const [isMounted, setIsMounted] = React.useState<boolean>(false);
 
   React.useEffect(() => {
@@ -58,7 +59,6 @@ export default function App({ snippets, categories }: Props) {
     column: "id",
     direction: "ascending",
   });
-
 
   const [page, setPage] = React.useState(1);
 
@@ -283,7 +283,10 @@ export default function App({ snippets, categories }: Props) {
                 onSelectionChange={setCategoryFilter}
               >
                 {categories.map((category) => (
-                  <DropdownItem key={category.categoryTitle} className="capitalize">
+                  <DropdownItem
+                    key={category.categoryTitle}
+                    className="capitalize"
+                  >
                     {capitalize(category.categoryTitle)}
                   </DropdownItem>
                 ))}

@@ -48,10 +48,10 @@ const columns = [
   { name: "ACTIONS", uid: "actions" },
 ];
 
-export default function App({categories}:{categories: CategoryType[]}) {
+export default function CategoriesTable({categories}:{categories: CategoryType[]}) {
   const [filterValue, setFilterValue] = React.useState("");
-  const [page, setPage] = React.useState(1);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [page, setPage] = React.useState<number>(1);
+  const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
     column: "id",
     direction: "ascending",

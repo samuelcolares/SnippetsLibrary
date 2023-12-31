@@ -1,9 +1,10 @@
 "use client";
 import React from "react";
 import { useFormState } from "react-dom";
-import * as actions from "@/actions";
-import { CategoryType } from "../../../../../../../types";
 import { Button, Input } from "@nextui-org/react";
+
+import { CategoryType } from "@/types";
+import * as actions from "@/actions";
 
 const EditForm = ({ category }: { category: CategoryType }) => {
   const [formState, action] = useFormState(actions.editCategory, {
@@ -20,7 +21,7 @@ const EditForm = ({ category }: { category: CategoryType }) => {
           name="categoryTitle"
           defaultValue={category.categoryTitle}
         />
-        <input className="hidden" value={category.id} name="id"/>
+        <input className="hidden" value={category.id} name="id" />
         <Button type="submit" size="lg" color="secondary">
           Update
         </Button>

@@ -1,12 +1,13 @@
 "use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 import { Button, Input, Code } from "@nextui-org/react";
 import { Editor } from "@monaco-editor/react";
 import { Textarea } from "@nextui-org/react";
-import { SnippetType } from "@/types";
-import { useRouter } from "next/navigation";
-import * as actions from "@/actions";
+
 import ModalDelete from "@/components/modal-delete";
+
+import { SnippetType } from "@/types";
 
 
 const View: React.FC<SnippetType> = ({
@@ -22,10 +23,10 @@ const View: React.FC<SnippetType> = ({
 
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between py-1">
         <h2 className="p-2 pl-0 text-2xl">View Snippet</h2>
         <div className="flex gap-2">
-          <Button color="primary" onClick={edit} variant="faded">
+          <Button color="primary" onClick={edit} variant="ghost">
             Edit
           </Button>
           <ModalDelete

@@ -1,14 +1,15 @@
 "use client";
 import React, { useState } from "react";
+import { useFormState } from "react-dom";
 import { Button, Input, ButtonGroup } from "@nextui-org/react";
 import { Editor } from "@monaco-editor/react";
 import { Textarea } from "@nextui-org/react";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
-import { useFormState } from "react-dom";
+
+import ModalDelete from "@/components/modal-delete";
+
 import * as actions from "@/actions";
-import { redirect } from "next/navigation";
 import { CategoryType, SnippetType } from "@/types";
-import { cn } from "@/lib/utils";
 import { languages } from "@/languages";
 
 type EditFormProp = SnippetType & {
@@ -36,17 +37,19 @@ const EditSnippetForm: React.FC<EditFormProp> = ({
   };
 
   const editAction = action.bind(null);
-  const del = actions.deleteSnippet.bind(null, id);
-
   return (
     <>
       <div className="flex justify-between">
         <h2 className="p-2 pl-0 text-2xl">Edit Snippet</h2>
-        <form action={del}>
-          <Button color="danger" variant="faded" type="submit">
-            Delete
-          </Button>
-        </form>
+        <ModalDelete
+            category={category}
+            id={id}
+            description={description}
+            language={language}
+            snippet={snippet}
+            title={title}
+            variant
+          />
       </div>
       <form
         className="border p-2 rounded-md border-grey-200 flex flex-col gap-2"

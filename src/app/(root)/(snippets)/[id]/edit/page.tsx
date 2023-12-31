@@ -1,6 +1,7 @@
-import prismadb from "@/lib/db";
-import { notFound } from "next/navigation";
 import React from "react";
+import { notFound } from "next/navigation";
+import prismadb from "@/lib/db";
+
 import EditSnippetForm from "./_components/edit-form";
 
 const EditPage = async ({ params }: { params: { id: string } }) => {
@@ -15,7 +16,7 @@ const EditPage = async ({ params }: { params: { id: string } }) => {
 
   if (!snippet) notFound();
 
-  return <EditSnippetForm {...snippet}  categories={categories}/>;
+  return <EditSnippetForm {...snippet} categories={categories} />;
 };
 
 export default EditPage;

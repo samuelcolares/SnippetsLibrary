@@ -1,8 +1,9 @@
 "use client";
-import { Button, Input } from "@nextui-org/react";
 import React from "react";
-import * as actions from "@/actions";
+import { Button, Input } from "@nextui-org/react";
 import { useFormState } from "react-dom";
+
+import * as actions from "@/actions";
 
 const NewCategoryPage = () => {
   const [formState, action] = useFormState(actions.createCategory, {

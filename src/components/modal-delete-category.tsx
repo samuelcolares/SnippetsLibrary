@@ -9,8 +9,10 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
-import { DeleteIcon } from "./ui/delete-icon";
-import { CategoryType } from "../../types";
+
+import { DeleteIcon } from "@/components/ui/delete-icon";
+
+import { CategoryType } from "@/types";
 import * as actions from "@/actions";
 
 type ModalProps = CategoryType & {

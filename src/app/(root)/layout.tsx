@@ -1,7 +1,8 @@
-import Navbar from "@/components/navbar";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import { ReactNode } from "react";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+
+import Navbar from "@/components/navbar";
 
 const LayoutPages = async ({ children }: { children: ReactNode }) => {
   const session = await getServerSession();

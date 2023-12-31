@@ -9,8 +9,10 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
-import { DeleteIcon } from "./ui/delete-icon";
-import { SnippetType } from "../../types";
+
+import { DeleteIcon } from "@/components/ui/delete-icon";
+
+import { SnippetType } from "@/types";
 import * as actions from "@/actions";
 
 type ModalProps = SnippetType & {
@@ -18,11 +20,7 @@ type ModalProps = SnippetType & {
 };
 
 export default function ModalDelete({
-  category,
-  description,
   id,
-  language,
-  snippet,
   title,
   variant = false,
 }: ModalProps) {
@@ -39,7 +37,7 @@ export default function ModalDelete({
         </button>
       )}
       {variant && (
-        <Button color="danger" variant="faded" onPress={onOpen}>
+        <Button color="danger" variant="ghost" onPress={onOpen}>
           Delete
         </Button>
       )}
