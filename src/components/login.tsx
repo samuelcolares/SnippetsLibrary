@@ -1,8 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { Image } from "@nextui-org/react";
-import logo from "@/logo.png";
-import adobe from "@/adobe.jpeg";
 // import Image from "next/image";
 import NextImage from "next/image";
 import avatar from "@/avatar.png";
@@ -54,8 +52,8 @@ const LoginScreen = () => {
     // e: React.FormEvent<HTMLFormElement>
     // e.preventDefault();
     if (data.username && data.password) {
+      setLoading(true);
       try {
-        setLoading(true);
         await new Promise((resolve) => setTimeout(resolve, 1000));
         await signIn("credentials", {
           username: data.username,

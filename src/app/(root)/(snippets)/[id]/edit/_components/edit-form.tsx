@@ -55,17 +55,17 @@ const EditSnippetForm: React.FC<EditFormProp> = ({
         className="border p-2 rounded-md border-grey-200 flex flex-col gap-2"
         action={editAction}
       >
-        <div className="flex gap-2">
+        <div className="flex gap-2 lg:flex-row flex-col">
           <Input
             type="text"
             label="Title"
-            className="max-w-[50%]"
+            className="lg:max-w-[50%]"
             name="title"
             defaultValue={title}
           />
           <Autocomplete
             label="Select Category"
-            className="max-w-[50%]"
+            className="lg:max-w-[50%]"
             defaultItems={categories}
             name="category"
             defaultInputValue={category}
@@ -76,6 +76,20 @@ const EditSnippetForm: React.FC<EditFormProp> = ({
               </AutocompleteItem>
             )}
           </Autocomplete>
+          <Autocomplete
+            label="Select Language"
+            className="lg:max-w-[50%]"
+            defaultItems={languages}
+            name="language"
+            defaultInputValue={language}
+            onInputChange={(value: string) => setLanguage(value.toLowerCase())}
+          >
+            {(item) => (
+              <AutocompleteItem key={item.label}>
+                {item.value.toUpperCase()}
+              </AutocompleteItem>
+            )}
+          </Autocomplete>
         </div>
         <Textarea
           label="Description"
@@ -83,18 +97,6 @@ const EditSnippetForm: React.FC<EditFormProp> = ({
           defaultValue={description}
         />
         <div>
-          <ButtonGroup radius="sm" className="mb-1" variant="ghost">
-            {languages.map((lang) => (
-              <Button
-                key={lang.label}
-                onClick={() => setLanguage(lang.value)}
-                color={languageType === lang.value ? "primary" : "default"}
-                variant={languageType === lang.value ? "solid" : "ghost"}
-              >
-                {lang.label}
-              </Button>
-            ))}
-          </ButtonGroup>
           <Editor
             height={"40vh"}
             theme="vs-dark"
@@ -105,12 +107,6 @@ const EditSnippetForm: React.FC<EditFormProp> = ({
             }}
             className="rounded-md overflow-hidden"
             onChange={handleEditorChange}
-          />
-          <input
-            type="text"
-            className="hidden"
-            value={languageType}
-            name="language"
           />
           <input type="text" className="hidden" value={id} name="id" />
           <textarea className="hidden" value={snippetCode} name="snippetCode" />

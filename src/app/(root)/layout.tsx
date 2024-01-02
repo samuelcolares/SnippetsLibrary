@@ -11,7 +11,7 @@ const LayoutPages = async ({ children }: { children: ReactNode }) => {
     <>
       <Navbar />
       <main className="flex-1 dark text-foreground bg-background flex items-center justify-center">
-        <div className="max-w-[75%] w-full">{children}</div>
+        <div className="xl:max-w-[75%] max-w-[95%] w-full">{children}</div>
       </main>
     </>
   );

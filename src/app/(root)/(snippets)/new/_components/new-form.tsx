@@ -31,16 +31,16 @@ const NewSnippetForm = ({ categories }: { categories: CategoryType[] }) => {
         className="border p-2 rounded-md border-grey-200 flex flex-col gap-2"
         action={action}
       >
-        <div className="flex gap-2">
+        <div className="flex gap-2 lg:flex-row flex-col">
           <Input
             type="text"
             label="Title"
-            className="max-w-[50%]"
+            className="lg:max-w-[50%]"
             name="title"
           />
           <Autocomplete
             label="Select Category"
-            className="max-w-[50%]"
+            className="lg:max-w-[50%]"
             defaultItems={categories}
             name="category"
           >
@@ -50,10 +50,23 @@ const NewSnippetForm = ({ categories }: { categories: CategoryType[] }) => {
               </AutocompleteItem>
             )}
           </Autocomplete>
+          <Autocomplete
+            label="Select Language"
+            className="lg:max-w-[50%]"
+            defaultItems={languages}
+            name="language"
+            onInputChange={(value: string) => setLanguage(value.toLowerCase())}
+          >
+            {(item) => (
+              <AutocompleteItem key={item.label}>
+                {item.value.toUpperCase()}
+              </AutocompleteItem>
+            )}
+          </Autocomplete>
         </div>
         <Textarea label="Description" name="description" />
         <div>
-          <ButtonGroup radius="sm" className="mb-1" variant="ghost">
+          {/* <ButtonGroup radius="sm" className="mb-1" variant="ghost">
             {languages.map((lang) => (
               <Button
                 key={lang.label}
@@ -64,7 +77,8 @@ const NewSnippetForm = ({ categories }: { categories: CategoryType[] }) => {
                 {lang.label}
               </Button>
             ))}
-          </ButtonGroup>
+          </ButtonGroup> */}
+
           <Editor
             height={"40vh"}
             theme="vs-dark"
@@ -76,12 +90,12 @@ const NewSnippetForm = ({ categories }: { categories: CategoryType[] }) => {
             className="rounded-md overflow-hidden"
             onChange={handleEditorChange}
           />
-          <input
+          {/* <input
             type="text"
             className="hidden"
             value={language}
             name="language"
-          />
+          /> */}
           <textarea className="hidden" value={snippetCode} name="snippetCode" />
         </div>
         <Button type="submit">Create Snippet</Button>

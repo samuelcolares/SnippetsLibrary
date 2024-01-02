@@ -50,20 +50,6 @@ const Navbar = () => {
       <BreadcrumbItem>Categories</BreadcrumbItem>
     </Breadcrumbs>
   );
-  const newCategory = (
-    <Breadcrumbs>
-      <BreadcrumbItem href="/">Home</BreadcrumbItem>
-      <BreadcrumbItem href="/category">Categories</BreadcrumbItem>
-      <BreadcrumbItem>New Category</BreadcrumbItem>
-    </Breadcrumbs>
-  );
-  const editCategory = (
-    <Breadcrumbs>
-      <BreadcrumbItem href="/">Home</BreadcrumbItem>
-      <BreadcrumbItem href="/category">Categories</BreadcrumbItem>
-      <BreadcrumbItem>Edit Category</BreadcrumbItem>
-    </Breadcrumbs>
-  );
   function isUUID(input: string) {
     const uuidRegex =
       /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
@@ -71,22 +57,19 @@ const Navbar = () => {
   }
   const snippetBoolean =
     !pathname.startsWith("/category") && pathname.endsWith("/edit");
-  const categoryBoolean =
-    pathname.startsWith("/category") && pathname.endsWith("/edit");
 
   const logOut = () => {
     signOut();
   };
   return (
     <header className="dark text-foreground bg-background">
-      <nav className="max-w-[75%] mx-auto py-4 flex justify-between items-center">
+      <nav className="xl:max-w-[75%] max-w-[95%] mb-20 mx-auto py-4 flex justify-between items-center">
         {pathname === "/" && home}
         {pathname === "/new" && newSnippet}
         {isUUID(pathname.replace("/", "")) && viewSnippet}
         {snippetBoolean && editSnippet}
         {pathname === "/category" && category}
-        {pathname === "/category/newCategory" && newCategory}
-        {categoryBoolean && editCategory}
+        <span></span>
         <Popover
           placement="bottom-end"
           isOpen={isOpen}

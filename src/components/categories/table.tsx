@@ -7,7 +7,6 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  getKeyValue,
   Input,
   Button,
   Tooltip,
@@ -17,27 +16,10 @@ import {
 } from "@nextui-org/react";
 import { EditIcon, PlusIcon, SearchIcon } from "lucide-react";
 import Link from "next/link";
-import { CategoryType } from "../../../types";
-import ModalDelete from "../modal-delete-category";
-
-const categories = [
-  {
-    id: "1",
-    categoryTitle: "LeetCode",
-  },
-  {
-    id: "2",
-    categoryTitle: "Shadcn/UI",
-  },
-  {
-    id: "3",
-    categoryTitle: "TailwindCSS",
-  },
-  {
-    id: "4",
-    categoryTitle: "William Howard",
-  },
-];
+import { CategoryType } from "@/types";
+import ModalDelete from "@/components/modal-delete-category";
+import ModalCreateCategory from "@/components/modal-create-category";
+import ModalEditCategory from "@/components/modal-edit-category";
 
 const columns = [
   {
@@ -48,7 +30,11 @@ const columns = [
   { name: "ACTIONS", uid: "actions" },
 ];
 
-export default function CategoriesTable({categories}:{categories: CategoryType[]}) {
+export default function CategoriesTable({
+  categories,
+}: {
+  categories: CategoryType[];
+}) {
   const [filterValue, setFilterValue] = React.useState("");
   const [page, setPage] = React.useState<number>(1);
   const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
@@ -112,14 +98,9 @@ export default function CategoriesTable({categories}:{categories: CategoryType[]
           return <p>{category.categoryTitle}</p>;
         case "actions":
           return (
-            <div className="relative flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <Tooltip content="Edit Snippet">
-                <Link
-                  href={`/category/${category.id}/edit`}
-                  className="text-lg text-default-400 cursor-pointer active:opacity-50"
-                >
-                  <EditIcon />
-                </Link>
+                <ModalEditCategory category={category}/>
               </Tooltip>
               <Tooltip color="danger" content="Delete Snippet">
                 <ModalDelete {...category} />
@@ -176,7 +157,7 @@ export default function CategoriesTable({categories}:{categories: CategoryType[]
             />
           </div>
           <div className="flex gap-3">
-            <Link href="/category/newCategory">
+            {/* <Link href="/category/newCategory">
               <Button
                 color="primary"
                 endContent={<PlusIcon />}
@@ -184,10 +165,14 @@ export default function CategoriesTable({categories}:{categories: CategoryType[]
               >
                 New Category
               </Button>
-            </Link>
+            </Link> */}
+            <ModalCreateCategory />
           </div>
         </div>
-        <div className="flex justify-end items-center">
+        <div className="flex justify-between items-center">
+          <span className="text-small text-default-400">
+            Total Categories: {categories.length}
+          </span>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
             <select
@@ -205,13 +190,9 @@ export default function CategoriesTable({categories}:{categories: CategoryType[]
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterValue, onSearchChange, onRowsPerPageChange, hasSearchFilter]);
 
-
   const bottomContent = React.useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-between items-center">
-        <span className="w-[30%] text-small text-default-400">
-          Total Categories: {categories.length}
-        </span>
         <Pagination
           isCompact
           showControls
@@ -244,36 +225,6 @@ export default function CategoriesTable({categories}:{categories: CategoryType[]
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items.length, page, pages, hasSearchFilter]);
 
-  // let list = useAsyncList({
-  //   async load({ signal }) {
-  //     let res = await fetch("https://swapi.py4e.com/api/people/?search", {
-  //       signal,
-  //     });
-  //     let json = await res.json();
-  //     setIsLoading(false);
-
-  //     return {
-  //       items: json.results,
-  //     };
-  //   },
-  //   async sort({ items, sortDescriptor }) {
-  //     return {
-  //       items: items.sort((a, b) => {
-  //         let first = a[sortDescriptor.column];
-  //         let second = b[sortDescriptor.column];
-  //         let cmp =
-  //           (parseInt(first) || first) < (parseInt(second) || second) ? -1 : 1;
-
-  //         if (sortDescriptor.direction === "descending") {
-  //           cmp *= -1;
-  //         }
-
-  //         return cmp;
-  //       }),
-  //     };
-  //   },
-  // });
-
   return (
     <Table
       aria-label="Categories Table"
@@ -290,7 +241,7 @@ export default function CategoriesTable({categories}:{categories: CategoryType[]
         {(column) => (
           <TableColumn
             key={column.uid}
-            align={column.uid === "actions" ? "center" : "start"}
+            align={"end"}
             allowsSorting={column.sortable}
           >
             {column.name}

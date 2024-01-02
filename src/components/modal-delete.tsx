@@ -41,7 +41,9 @@ export default function ModalDelete({
           Delete
         </Button>
       )}
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} classNames={{
+          backdrop: "bg-[#000000]/95",
+        }}>
         <ModalContent>
           {(onClose) => (
             <>

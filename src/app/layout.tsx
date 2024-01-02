@@ -8,7 +8,7 @@ import { getServerSession } from "next-auth";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Personal Library",
+  title: "Sam's Personal Library",
 };
 
 export default async function RootLayout({

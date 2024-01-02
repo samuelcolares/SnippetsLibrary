@@ -132,9 +132,15 @@ export default function SnippetsTable({ snippets, categories }: Props) {
         case "category":
           return <p>{snippet.category}</p>;
         case "description":
-          return <p className="truncate w-[200px]">{snippet.description}</p>;
+          return (
+            <p className="truncate max-w-[200px] w-full">
+              {snippet.description}
+            </p>
+          );
         case "snippet":
-          return <p className="truncate w-[200px]">{snippet.snippet}</p>;
+          return (
+            <p className="truncate max-w-[200px] w-full">{snippet.snippet}</p>
+          );
         case "actions":
           return (
             <div className="relative flex items-center gap-2">
@@ -216,12 +222,12 @@ export default function SnippetsTable({ snippets, categories }: Props) {
   const topContent = React.useMemo(() => {
     return (
       <div className="flex flex-col gap-4">
-        <div className="flex justify-between gap-3">
-          <div className="w-full flex gap-3">
+        <div className="flex justify-between gap-3 flex-col sm:flex-row">
+          <div className="w-full flex gap-3 flex-col xl:flex-row">
             <Input
               size="sm"
               isClearable
-              className="w-full sm:max-w-[33%]"
+              className="w-full xl:max-w-[33%] sm:max-w-[70%]"
               placeholder="Search by snippet name..."
               startContent={<SearchIcon />}
               value={filterValue}
@@ -231,7 +237,7 @@ export default function SnippetsTable({ snippets, categories }: Props) {
             <Input
               size="sm"
               isClearable
-              className="w-full sm:max-w-[33%]"
+              className="w-full xl:max-w-[33%] sm:max-w-[70%]"
               placeholder="Search by snippet code..."
               startContent={<SearchIcon />}
               value={codeValue}
@@ -239,81 +245,90 @@ export default function SnippetsTable({ snippets, categories }: Props) {
               onValueChange={onSearchCodeChange}
             />
           </div>
-          <div className="flex gap-3">
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
-                  className="h-12"
-                >
-                  Columns
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={visibleColumns}
-                selectionMode="multiple"
-                onSelectionChange={setVisibleColumns}
-              >
-                {columns.map((column) => (
-                  <DropdownItem key={column.uid} className="capitalize">
-                    {capitalize(column.name)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
-                  className="h-12"
-                >
-                  Category
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={categoryFilter}
-                selectionMode="multiple"
-                onSelectionChange={setCategoryFilter}
-              >
-                {categories.map((category) => (
-                  <DropdownItem
-                    key={category.categoryTitle}
-                    className="capitalize"
+          <div className="flex gap-3 max-sm:justify-between">
+            <div className="flex gap-3 xl:flex-row flex-col">
+              <Dropdown>
+                <DropdownTrigger className="flex">
+                  <Button
+                    endContent={<ChevronDownIcon className="text-small" />}
+                    className="h-12"
                   >
-                    {capitalize(category.categoryTitle)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-            <Link href="/category">
-              <Button
-                color="primary"
-                variant="bordered"
-                endContent={<Layers3Icon />}
-                className="h-12"
-              >
-                Categories Page
-              </Button>
-            </Link>
-            <Link href="/new">
-              <Button
-                color="primary"
-                endContent={<PlusIcon />}
-                className="h-12"
-              >
-                New Snippet
-              </Button>
-            </Link>
+                    Columns
+                    {/* <span className="max-xl:hidden">Columns</span>
+                  <span className="max-xl:inline hidden">Cols</span> */}
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu
+                  disallowEmptySelection
+                  aria-label="Table Columns"
+                  closeOnSelect={false}
+                  selectedKeys={visibleColumns}
+                  selectionMode="multiple"
+                  onSelectionChange={setVisibleColumns}
+                >
+                  {columns.map((column) => (
+                    <DropdownItem key={column.uid} className="capitalize">
+                      {capitalize(column.name)}
+                    </DropdownItem>
+                  ))}
+                </DropdownMenu>
+              </Dropdown>
+
+              <Dropdown>
+                <DropdownTrigger className="flex">
+                  <Button
+                    endContent={<ChevronDownIcon className="text-small" />}
+                    className="h-12"
+                  >
+                    Category
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu
+                  disallowEmptySelection
+                  aria-label="Table Columns"
+                  closeOnSelect={false}
+                  selectedKeys={categoryFilter}
+                  selectionMode="multiple"
+                  onSelectionChange={setCategoryFilter}
+                >
+                  {categories.map((category) => (
+                    <DropdownItem
+                      key={category.categoryTitle}
+                      className="capitalize"
+                    >
+                      {capitalize(category.categoryTitle)}
+                    </DropdownItem>
+                  ))}
+                </DropdownMenu>
+              </Dropdown>
+            </div>
+            <div className="flex gap-3 xl:flex-row flex-col">
+              <Link href="/category">
+                <Button
+                  color="primary"
+                  variant="bordered"
+                  endContent={<Layers3Icon />}
+                  className="h-12"
+                >
+                  <span className="hidden xl:inline">Categories Page</span>
+                </Button>
+              </Link>
+              <Link href="/new">
+                <Button
+                  color="primary"
+                  endContent={<PlusIcon />}
+                  className="h-12"
+                >
+                  <span className="hidden xl:inline">New Snippet</span>
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
-        <div className="flex justify-end items-center">
+        <div className="flex justify-between items-center">
+          <span className="text-small text-default-400">
+            Total snippets: {snippets.length}
+          </span>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
             <select
@@ -341,10 +356,7 @@ export default function SnippetsTable({ snippets, categories }: Props) {
 
   const bottomContent = React.useMemo(() => {
     return (
-      <div className="py-2 px-2 flex justify-between items-center">
-        <span className="w-[30%] text-small text-default-400">
-          Total snippets: {snippets.length}
-        </span>
+      <div className="py-2 px-2 flex justify-center sm:justify-between items-center mb-10">
         <Pagination
           isCompact
           showControls
@@ -396,7 +408,7 @@ export default function SnippetsTable({ snippets, categories }: Props) {
       onSortChange={setSortDescriptor}
       isStriped={true}
     >
-      <TableHeader columns={headerColumns} className="w-10">
+      <TableHeader columns={headerColumns} className="max-w-10">
         {(column) => (
           <TableColumn
             key={column.uid}
